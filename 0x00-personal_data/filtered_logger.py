@@ -2,7 +2,7 @@
 """Module for filtering and logging user data while
 obfuscating sensitive information."""
 
-import os
+from os import environ
 import re
 import logging
 import mysql.connector
@@ -67,10 +67,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         mysql.connector.connection.MySQLConnection: The database connection.
     """
     # Fetch database credentials from environment variables or default values.
-    db_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = os.getenv("PERSONAL_DATA_DB_NAME", "")
-    db_user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
-    db_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    db_host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = environ.get("PERSONAL_DATA_DB_NAME", "")
+    db_user = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    db_pwd = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
 
     # Connect to the database.
     connection = mysql.connector.connect.MySQLConnection(
