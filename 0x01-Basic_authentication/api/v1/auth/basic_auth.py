@@ -55,7 +55,7 @@ class BasicAuth(Auth):
 
     def extract_user_credentials(
             self,
-            dec_authorization_h: str) -> Tuple[str, str]:
+            decoded_base64_authorization_header: str) -> Tuple[str, str]:
         """Extracts user credentials from a Base64-decoded authorization
         header for Basic Authentication.
 
@@ -67,9 +67,12 @@ class BasicAuth(Auth):
             Tuple[str, str]: A tuple of (user, password) if valid,
             else (None, None).
         """
-        if type(dec_authorization_h) == str:
+        if type(decoded_base64_authorization_header) == str:
             pattern = r'(?P<user>[^:]+):(?P<password>.+)'
-            field_match = re.fullmatch(pattern, dec_authorization_h.strip())
+            field_match = re.fullmatch(
+                    pattern,
+                    decoded_base64_authorization_header()
+                    )
             if field_match is not None:
                 user = field_match.group('user')
                 password = field_match.group('password')
